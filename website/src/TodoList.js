@@ -25,6 +25,7 @@ class TodoList extends Component {
             className='input'
             value={this.state.inputValue}
             onChange={this.handleInputChange}
+            ref={(input) => {this.input = input}}
             />
           <button onClick={this.handleBtnClick}>submit</button>
         </div>
@@ -35,22 +36,44 @@ class TodoList extends Component {
     )
   }
 
+  componentWillMount(){
+    console.log('componentWillMount');
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount');
+  }
+
+  shouldComponentUpdate(){
+    console.log('shouldComponentUpdate');
+    return true;
+  }
+
+  componentWillUpdate(){
+    console.log('componentWillUpdate');
+  }
+
+  componentDidUpdate(){
+    console.log('componentDidUpdate');
+  }
+
   getTodoItem(){
+    console.log('parent render');
     return this.state.list.map((item, index) => {
       return <TodoItem
         key={index}
         content={item}
-        ndex={index}
+        index={index}
         deleteItem={this.handleItemDelete}/>
     })
   }
 
-  handleInputChange(e) {
+  handleInputChange() {
     // this.setState({
     //   ...this.state,
     //   inputValue: e.target.value,
     // })
-    const value = e.target.value;
+    const value = this.input.value;
     this.setState(() => ({
       inputValue: value,
     })

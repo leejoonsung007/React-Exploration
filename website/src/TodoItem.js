@@ -8,7 +8,16 @@ class TodoItem extends Component{
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentWillReceiveProps(){
+    console.log('child componentWillReceiveProps');
+  }
+
+  componentWillMount(){
+    console.log('child componentWillMount');
+  }
+
   render(){
+    console.log('child render')
     const { content, test } = this.props;
     return <div onClick={this.handleClick}>{test} - {content}</div>
   }
