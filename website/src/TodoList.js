@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import './style.css';
+import axios from 'axios';
 import TodoItem from './TodoItem';
+import './style.css';
 
 class TodoList extends Component {
 
@@ -36,29 +37,17 @@ class TodoList extends Component {
     )
   }
 
-  componentWillMount(){
-    console.log('componentWillMount');
-  }
-
   componentDidMount(){
-    console.log('componentDidMount');
-  }
-
-  shouldComponentUpdate(){
-    console.log('shouldComponentUpdate');
-    return true;
-  }
-
-  componentWillUpdate(){
-    console.log('componentWillUpdate');
-  }
-
-  componentDidUpdate(){
-    console.log('componentDidUpdate');
+  axios.get('/api/todolist').then((res) =>
+  {
+  this.setState(() => ({
+    list: [...res.data]
+    }));
+  })
+  .catch(() => {console.log('error')})
   }
 
   getTodoItem(){
-    console.log('parent render');
     return this.state.list.map((item, index) => {
       return <TodoItem
         key={index}
@@ -68,16 +57,16 @@ class TodoList extends Component {
     })
   }
 
-  handleInputChange() {
-    // this.setState({
-    //   ...this.state,
-    //   inputValue: e.target.value,
-    // })
-    const value = this.input.value;
+  handleInputChange(e) {
+    const value = e.target.value;
     this.setState(() => ({
       inputValue: value,
-    })
-  );
+    }));
+    // const value = this.input.value;
+    // this.setState(() => ({
+    //   inputValue: value,
+    // })
+  // );
 }
 
   handleBtnClick() {
