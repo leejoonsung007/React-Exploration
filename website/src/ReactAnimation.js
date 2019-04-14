@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './style.css';
 
-class App extends Component {
+class ReactAnimation extends Component {
 
   constructor(props){
     super(props);
@@ -47,4 +47,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default ReactAnimation;
