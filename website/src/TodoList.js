@@ -1,26 +1,52 @@
-import React, { Component } from 'react';
-import connect from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
-class TodoList extends Component {
+const TodoList = (props) => {
+  const { inputValue, list, changeInputValue, handleClick } = props;
 
-  render() {
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <input value={this.props.inputValue}/>
-          <button>submit</button>
-        </div>
-        <ul>
-          <li>Dell</li>
-        </ul>
+        <input value={inputValue} onChange={changeInputValue}/>
+        <button onClick={handleClick}>submit</button>
       </div>
-    )
-  }
+      <ul>
+        {
+          list.map((item, index) => {
+            return <li key={index}>{item}</li>;
+          })
+        }
+      </ul>
+    </div>
+  )
 }
 
+// map store state to component props
 const mapStateToProps = ( state ) => {
   return {
-    inputValue: state.inputValue
+    inputValue: state.inputValue,
+    list: state.list
   }
 }
-export default connect(mapStateToProps, null)(TodoList);
+
+// store.dispatch, props - how to change the value in component
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changeInputValue(e) {
+      const action = {
+        type: 'change_intput_value',
+        value: e.target.value,
+      }
+      dispatch(action);
+    },
+
+    handleClick() {
+      const action = {
+        type: 'add_item'
+      }
+      dispatch(action);
+    }
+  }
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
